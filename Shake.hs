@@ -1,17 +1,15 @@
 import Development.Shake
 import Development.Shake.FilePath
 
+targets = [x <> "0000.txt" | x <- ["25", "50", "100", "200", "400", "800", "1600", "3200"]]
 main = shakeArgs shakeOptions $ do
-    let values = [x <> "0000" | x <- ["25", "50", "100", "200", "400", "800", "1600", "3200"]]
-    let targets = [f <.> "txt" | f <- values]
     phony "all" $ need targets
 
     "*0000.txt" %> \out -> do
         need ["Main"]
-        Stderr stderr <- cmd "./Main +RTS -s -RTS" (takeBaseName out)
-        writeFile' out stderr
+        cmd_ "./Main +RTS -s -RTS" (takeBaseName out) (FileStderr out)
 
-    "Main" %> \out -> do
+    "Main" %> \_ -> do
         need ["Main.hs"]
         cmd_ "ghc -O -optc-O3 Main.hs"
 
