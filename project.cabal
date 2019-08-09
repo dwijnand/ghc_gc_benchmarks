@@ -1,0 +1,9 @@
+cabal-version:       2.4
+name:                t
+version:             0.1.0.0
+
+executable t
+  main-is:             Shake.hs
+  build-depends:         base  ^>=4.12.0.0
+                       , shake ^>= 0.18.3
+  default-language:    Haskell2010

@@ -2,3 +2,4 @@ Main
 Main.o
 Main.hi
 *.txt
+/.shake
